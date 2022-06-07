@@ -1,8 +1,10 @@
-<?php 
+<?php
 
-	require('functions.php');
-	functions::get_header();
+require('functions.php');
+functions::get_header();
 ?>
+
+<div class="div-contenedor ">
   <h1 class="text-center text-success mt-3">INSTALACIONES</h1>
   <hr>
 
@@ -20,7 +22,7 @@
           <img src="imagenes/instalaciones.jpg" class="d-block w-100" alt="Slide 1">
           <div class="carousel-caption d-none d-md-block">
             <h5>Zona 1</h5>
-            
+
           </div>
         </div>
         <div class="carousel-item" style="max-height: 500px">
@@ -33,7 +35,7 @@
           <img src="imagenes/instalaciones3.jpg" class="d-block w-100" alt="Slide 3">
           <div class="carousel-caption d-none d-md-block">
             <h5>Zona 3</h5>
-            
+
           </div>
         </div>
       </div>
@@ -46,21 +48,15 @@
     </div>
   </div>
 
-  
-  <p class="m-2"> 
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, ex quis odio dolorem at optio ab
-    voluptatibus, laborum quia rem officia veritatis omnis ut laudantium voluptatum id culpa commodi
-    veniam corrupti distinctio recusandae assumenda! Cupiditate, qui quisquam repudiandae aperiam
-    sequi
-    nam explicabo iure commodi cum voluptas officiis eligendi atque veritatis quod voluptate
-    sapiente
-    omnis perferendis tempora. Reiciendis suscipit saepe, est a, nemo quos fugiat quam deserunt
-    libero,
-    ipsum atque eum exercitationem tenetur! Modi est soluta molestiae vero veniam pariatur maxime
-    provident inventore fuga reprehenderit unde culpa doloribus dolores aperiam laudantium similique
-    sunt assumenda, ipsum commodi laboriosam sapiente iusto ipsa porro.
+
+  <p class="m-2">
+    Debido al alto incremento de abandono de mascotas en los últimos años nos hemos visto en la necesidad y obligación
+    de hacer una gran ampliación de nuestras instalaciones para aumentar nuestra ayuda. Actualmente tenemos 4 salas interiores con puertas al exterior para que los gatos se sientan como en libertad.
+    20 habitáculos para perros,2 clínicas veterinarias,oficinas y un gran área de terreno para que los animales se sientan libres y en las que se hacen ciertas actividades
   </p>
   <hr>
-  <?php 
-  functions::get_footer();
-  ?>
+
+
+<?php
+functions::get_footer();
+?>

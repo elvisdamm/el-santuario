@@ -34,7 +34,7 @@
   </style>
 </head>
 
-<body>
+<div class="div-contenedor ">
   <?php 
   $dniError = "";
   if (isset($_POST["entrar"])) {
@@ -123,6 +123,7 @@
       </div>
     </div>
   </div>
+
   <?php 
   functions::get_footer();
   ?>

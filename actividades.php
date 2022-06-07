@@ -1,9 +1,10 @@
-<?php 
+<?php
 
-	require('functions.php');
-	functions::get_header();
+require('functions.php');
+functions::get_header();
 ?>
-<body>
+
+
 
   <div class="container-fluid mt-5">
     <div class="row">
@@ -160,6 +161,8 @@
         </div>
       </div>
     </div>
-    <?php 
-  functions::get_footer();
-  ?>
+  </div>
+
+<?php
+functions::get_footer();
+?>

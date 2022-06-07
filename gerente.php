@@ -1,12 +1,9 @@
+
 <?php
 
 require('functions.php');
 functions::get_header();
-?>
 
-<body>
-
-    <?php
     $enlace = mysqli_connect("localhost", "gerente", "gerente", "elsantuario");
 
 
@@ -74,7 +71,15 @@ functions::get_header();
             }
         }
     ?>
-        <div class="container-fluid ps-md-0">
+    <style>
+        .bg-image {
+            background-image: url('imagenes/gatos.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+    <div class="div-contenedor ">
+        <div class="container-fluid ps-md-0" >
             <div class="row g-0">
                 <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
                 <div class="col-md-8 col-lg-6">
@@ -235,13 +240,13 @@ functions::get_header();
     ?>
         <div class="container-fluid ps-md-0">
             <div class="row g-0">
-                <div class="d-none d-md-flex col-md-4 col-lg-6"></div>
+                <div class="d-none d-md-flex col-md-4 col-lg-6" ></div>
                 <div class="col-md-8 col-lg-6">
                     <div class="login d-flex align-items-center py-5">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8 mx-auto">
-                                    <h3 class="login-heading mb-4">Inserte los datos del nuevo paciente</h3>
+                                    <h3 class="login-heading mb-4">Inserte los datos del nuevo voluntario</h3>
 
                                     <!-- Sign In Form -->
                                     <form action="#" method="POST">
@@ -263,12 +268,12 @@ functions::get_header();
                                             <label for="floatingInput">Fecha Nacimiento</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="floatingInput" name="telefono" required value="<?php echo $telefono ?>"><span><?php echo $telefonoError; ?></span>
+                                            <input type="text" class="form-control" id="floatingInput" name="telefono"  value="<?php echo $telefono ?>"><span><?php echo $telefonoError; ?></span>
                                             <label for="floatingInput">Teléfono</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="floatingInput" name="direccion" required value="<?php echo $direccion ?>">
+                                            <input type="text" class="form-control" id="floatingInput" name="direccion"  value="<?php echo $direccion ?>">
                                             <label for="floatingInput">Dirección</label>
                                         </div>
                                         <div class="form-floating mb-3">
@@ -369,7 +374,7 @@ functions::get_header();
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8 mx-auto">
-                                    <h3 class="login-heading mb-4">Inserte los datos del nuevo paciente</h3>
+                                    <h3 class="login-heading mb-4">Asigne la actividad al voluntario</h3>
                                     <form action="#" method="POST">
                                         <?php
                                         $volun = 'SELECT dniUsuario,usuNombre,usuApell FROM usuarios WHERE usuTipo="Voluntario" ORDER BY usuApell';
@@ -666,9 +671,10 @@ functions::get_header();
 
         if ($nConfig != 0) {
         ?>
-            <div class="container mt-2">
+            <div class="container mt-5">
+            <h3 class="login-heading mb-4">Animales actualmente en EL SANTUARIO</h3>
                 <table class="table">
-                    <thead class="table-dark">
+                    <thead class="table-success">
                         <td>Nombre</td>
                         <td>Especie</td>
                         <td>Sexo</td>
@@ -707,9 +713,10 @@ functions::get_header();
         if ($nConfig != 0) {
 
         ?>
-            <div class="container mt-2">
+            <div class="container mt-5">
+            <h3 class="login-heading mb-4">Todos los animales EL SANTUARIO</h3>
                 <table class="table">
-                    <thead class="table-dark">
+                    <thead class="table-success">
                         <td>Nombre</td>
                         <td>Especie</td>
                         <td>Sexo</td>
@@ -751,7 +758,7 @@ functions::get_header();
         }
     }
     ?>
-</body>
+
 
 <?php
 functions::get_footer();
