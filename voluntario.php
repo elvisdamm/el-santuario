@@ -2,12 +2,12 @@
 
 require('functions.php');
 functions::get_header();
-?>
 
 
-
-    <?php
     $enlace = mysqli_connect("localhost", "voluntario", "voluntario", "elsantuario");
+
+
+    
     if (isset($_POST["cambio"])) {
         $_SESSION["cambio"]=$_POST["cambio"];
         header("Location:cambio.php");

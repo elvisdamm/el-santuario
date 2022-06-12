@@ -2,22 +2,15 @@
 
 require('functions.php');
 functions::get_header();
-?>
 
-
-
-    <?php
     $enlace = mysqli_connect("localhost", "adoptante", "adoptante", "elsantuario");
 
-
-
     if ($_SESSION['action'] === 'verAnimalAdop') {
-        $animales = 'SELECT aniNombre,aniEspecie,aniSexo,fechaAdop FROM animales,adopciones WHERE adopciones.dniAdoptante="' . $_SESSION["dniUsuario"] . '" AND adopciones.idAnimal=animales.idAnimal ';
+        $animales = 'SELECT aniNombre,aniEspecie,aniSexo,fechaAdop FROM animales,adopciones WHERE adopciones.dniAdoptante="' . $_SESSION["dniUsuario"] . '" 
+        AND adopciones.idAnimal=animales.idAnimal ';
         $dato = mysqli_query($enlace, $animales);
         $nConfig = mysqli_num_rows($dato);
-
         if ($nConfig != 0) {
-
     ?>
             <div class="container mt-5">
                 <h4>Adopciones</h4>
@@ -27,12 +20,10 @@ functions::get_header();
                         <td>Especie</td>
                         <td>Sexo</td>
                         <td>Fecha Adopción</td>
-
                     </thead>
                     <?php
                     for ($i = 0; $i < $nConfig; $i++) {
                         $fila = mysqli_fetch_array($dato);
-
                     ?>
                         <tr>
                             <td><?php echo $fila['aniNombre'] ?></td>
@@ -94,7 +85,7 @@ functions::get_header();
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8 mx-auto">
-                                    <h3 class="login-heading mb-4">Inserte los datos del nuevo médico</h3>
+                                    <h3 class="login-heading mb-4">Cambio de contraseña</h3>
 
                                     <!-- Sign In Form -->
                                     <form action="#" method="POST">

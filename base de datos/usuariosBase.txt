@@ -7,8 +7,6 @@ GRANT SELECT, INSERT, UPDATE ON `elsantuario`.`actividades` TO `gerente`@`localh
 
 GRANT SELECT, INSERT, UPDATE ON `elsantuario`.`animales` TO `gerente`@`localhost`;
 
-GRANT SELECT, INSERT, UPDATE ON `elsantuario`.`voluntarios` TO `gerente`@`localhost`;
-
 GRANT SELECT ON `elsantuario`.`tipoactividades` TO `gerente`@`localhost`;
 
 GRANT SELECT, INSERT ON `elsantuario`.`usuarios` TO `gerente`@`localhost`;
@@ -17,8 +15,6 @@ GRANT SELECT, INSERT ON `elsantuario`.`usuarios` TO `gerente`@`localhost`;
 GRANT USAGE ON *.* TO `voluntario`@`localhost` IDENTIFIED BY PASSWORD '*9C26E09B7C6A40111BF7EC28F9809FBFAE04D926';
 
 GRANT SELECT, UPDATE (horaActividad, fechaActividad) ON `elsantuario`.`actividades` TO `voluntario`@`localhost`;
-
-GRANT SELECT ON `elsantuario`.`voluntarios` TO `voluntario`@`localhost`;
 
 GRANT SELECT (idAnimal, aniAdop, aniEspecie, aniFechaIngreso, aniNombre, aniSexo) ON `elsantuario`.`animales` TO `voluntario`@`localhost`;
 

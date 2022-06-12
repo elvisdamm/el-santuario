@@ -1,76 +1,75 @@
-
 <?php
 
 require('functions.php');
 functions::get_header();
 
-    $enlace = mysqli_connect("localhost", "gerente", "gerente", "elsantuario");
+$enlace = mysqli_connect("localhost", "gerente", "gerente", "elsantuario");
 
 
 
-    if ($_SESSION['action'] === 'nuevoAni') {
-        $fechaError = $espeError = $nombreError = "";
-        $fecha = $aniNombre = $aniEspecie = "";
+if ($_SESSION['action'] === 'nuevoAni') {
+    $fechaError = $espeError = $nombreError = "";
+    $fecha = $aniNombre = $aniEspecie = "";
 
-        //Funciones para validar
-        if (isset($_POST["agregar"])) {
-            $fecha = $_POST["aniFechaIngreso"];
-            $aniEspecie = $_POST["aniEspecie"];
-            $aniNombre = $_POST["aniNombre"];
-            function validar_fecha($fecha)
-            {
-                $hoy = date("Y-m-d");
-                if ($hoy <= $fecha) {
-                    return false;
-                } else {
-
-                    return true;
-                }
-            }
-            function validar_especie($aniEspecie)
-            {
-                if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $aniEspecie)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            function validar_nombre($aniNombre)
-            {
-                if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $aniNombre)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            if (validar_fecha($fecha) == true && validar_nombre($aniNombre) == true && validar_especie($aniEspecie)) {
-                $consulta = "INSERT INTO animales (idAnimal,aniNombre,aniFechaIngreso,aniFechaAdop,aniEspecie,aniSexo,aniAdop) 
-    VALUES (NULL,'{$_POST["aniNombre"]}','{$_POST["aniFechaIngreso"]}', NULL,'{$_POST["aniEspecie"]}','{$_POST["aniSexo"]}','0')";
-                $introducir = mysqli_query($enlace, $consulta);
-
-                if (!$introducir) {
-                    $introducidos = "Error: No se pudieron insertar los datos";
-                } else {
-                    $introducidos = "Datos introducidos con exito";
-                }
+    //Funciones para validar
+    if (isset($_POST["agregar"])) {
+        $fecha = $_POST["aniFechaIngreso"];
+        $aniEspecie = $_POST["aniEspecie"];
+        $aniNombre = $_POST["aniNombre"];
+        function validar_fecha($fecha)
+        {
+            $hoy = date("Y-m-d");
+            if ($hoy <= $fecha) {
+                return false;
             } else {
-                if (validar_fecha($fecha) == false) {
-                    $fechaError = "La fecha no puede ser posterior a hoy";
-                    $fecha = "";
-                }
-                if (validar_nombre($aniNombre) == false) {
-                    $nombreError = "Solo letras y espacios";
-                    $aniNombre = "";
-                }
-                if (validar_especie($aniEspecie) == false) {
-                    $espeError = "Solo letras y espacios";
-                    $aniEspecie = "";
-                }
+
+                return true;
             }
         }
-    ?>
+        function validar_especie($aniEspecie)
+        {
+            if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $aniEspecie)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validar_nombre($aniNombre)
+        {
+            if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $aniNombre)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        if (validar_fecha($fecha) == true && validar_nombre($aniNombre) == true && validar_especie($aniEspecie)) {
+            $consulta = "INSERT INTO animales (idAnimal,aniNombre,aniFechaIngreso,aniFechaAdop,aniEspecie,aniSexo,aniAdop) 
+    VALUES (NULL,'{$_POST["aniNombre"]}','{$_POST["aniFechaIngreso"]}', NULL,'{$_POST["aniEspecie"]}','{$_POST["aniSexo"]}','0')";
+            $introducir = mysqli_query($enlace, $consulta);
+
+            if (!$introducir) {
+                $introducidos = "Error: No se pudieron insertar los datos";
+            } else {
+                $introducidos = "Datos introducidos con exito";
+            }
+        } else {
+            if (validar_fecha($fecha) == false) {
+                $fechaError = "La fecha no puede ser posterior a hoy";
+                $fecha = "";
+            }
+            if (validar_nombre($aniNombre) == false) {
+                $nombreError = "Solo letras y espacios";
+                $aniNombre = "";
+            }
+            if (validar_especie($aniEspecie) == false) {
+                $espeError = "Solo letras y espacios";
+                $aniEspecie = "";
+            }
+        }
+    }
+?>
     <style>
         .bg-image {
             background-image: url('imagenes/gatos.jpg');
@@ -79,7 +78,7 @@ functions::get_header();
         }
     </style>
     <div class="div-contenedor ">
-        <div class="container-fluid ps-md-0" >
+        <div class="container-fluid ps-md-0">
             <div class="row g-0">
                 <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
                 <div class="col-md-8 col-lg-6">
@@ -121,126 +120,127 @@ functions::get_header();
             </div>
         </div>
     <?php
-    }
-    if ($_SESSION['action'] === 'altaVol') {
-        $apeError = $nombreError = $dniError = $introducidos = $nacimiento = $nacError = $telefonoError = $contraError = "";
-        $name = $ape = $dni = $direccion = $telefono = "";
+}
+if ($_SESSION['action'] === 'altaVol') {
+    $apeError = $nombreError = $dniError = $introducidos = $nacimiento = $nacError = $telefonoError = $contraError = "";
+    $name = $ape = $dni = $direccion = $telefono = "";
 
-        if (isset($_POST["agregar"])) {
-            $dni = $_POST["dniUsuario"];
-            $nacimiento = $_POST["fechaNac"];
-            $ape = $_POST["ape"];
-            $name = $_POST["nombre"];
-            $conta = $_POST["contrase"];
-            $repeContra = $_POST["repeContra"];
-            $direccion = $_POST["direccion"];
-            $telefono = $_POST["telefono"];
+    if (isset($_POST["agregar"])) {
+        $dni = $_POST["dniUsuario"];
+        $nacimiento = $_POST["fechaNac"];
+        $ape = $_POST["ape"];
+        $name = $_POST["nombre"];
+        $conta = $_POST["contrase"];
+        $repeContra = $_POST["repeContra"];
+        $direccion = $_POST["direccion"];
+        $telefono = $_POST["telefono"];
 
-            function validar_contra($contra, $repeContra)
-            {
-                if ($contra != $repeContra) {
+        function validar_contra($contra, $repeContra)
+        {
+            if ($contra != $repeContra) {
 
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            function validar_nombre($name)
-            {
-                if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $name)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            function validar_ape($ape)
-            {
-                if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $ape)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            function validar_dni($dni)
-            {
-                if (!preg_match('/[0-9]{7,8}[A-Z]/', $dni)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-
-            function validar_fecha($nacimiento)
-            {
-                $hoy = date("Y-m-d");
-                if ($hoy <= $nacimiento || 1900 > $nacimiento) {
-                    return false;
-                } else {
-
-                    return true;
-                }
-            }
-            function validar_tel($telefono)
-            {
-                if (!preg_match("/^[0-9]{9}$/", $telefono)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            if (validar_tel($telefono) == true && validar_fecha($nacimiento) == true && validar_contra($conta, $repeContra) == true && validar_dni($dni) == true && validar_ape($ape) == true && validar_nombre($name) == true) {
-                $cifrada = hash_hmac('sha512', $_POST["contrase"], "primeraweb");
-                $usuario = 'SELECT dniUsuario,usuPassword FROM usuarios WHERE dniUsuario="' . $_POST["dniUsuario"] . '"';
-                $dato = mysqli_query($enlace, $usuario);
-
-                if (mysqli_num_rows($dato) === 0) {
-
-
-                    $consulta = "INSERT INTO usuarios (dniUsuario,usuPassword,usuTipo,usuNombre,usuApell,usuTel,usuDir,fechaNac) 
-                VALUES ('{$_POST["dniUsuario"]}','{$cifrada}','Voluntario','{$_POST["nombre"]}','{$_POST["ape"]}','{$_POST["telefono"]}','{$_POST["direccion"]}','{$_POST["fechaNac"]}')";
-                    $introducir = mysqli_query($enlace, $consulta);
-
-                    if (!$introducir) {
-                        $introducidos = "Error: No se pudieron insertar los datos";
-                    } else {
-                        $introducidos = "Datos introducidos con exito";
-                    }
-                } else {
-                    $dniError = "El DNI ya existe en la base de datos";
-                }
+                return false;
             } else {
-                if (validar_fecha($nacimiento) == false) {
-                    $nacError = "Fecha incorrecta";
-                    $nacimiento = "";
-                }
-
-                if (validar_dni($dni) == false) {
-                    $dniError = "El DNI no es válido";
-                    $dni = "";
-                }
-                if (validar_ape($ape) == false) {
-                    $apeError = "Solo letras y espacios ";
-                    $ape = "";
-                }
-                if (validar_nombre($name) == false) {
-                    $nombreError = "Solo letras y espacios ";
-                    $name = "";
-                }
-                if (validar_tel($telefono) == false) {
-                    $telefonoError = "Movil Invalido";
-                    $telefono = "";
-                }
-                if (validar_contra($conta, $repeContra) == false) {
-                    $contraError = " Las contraseñas no son iguales,vuelve a introducirlas";
-                }
+                return true;
             }
         }
+        function validar_nombre($name)
+        {
+            if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $name)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validar_ape($ape)
+        {
+            if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $ape)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function validar_dni($dni)
+        {
+            if (!preg_match('/[0-9]{7,8}[A-Z]/', $dni)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        function validar_fecha($nacimiento)
+        {
+            $hoy = date("Y-m-d");
+            if ($hoy <= $nacimiento || 1900 > $nacimiento || 2014 < $nacimiento) {
+                return false;
+            } else {
+
+                return true;
+            }
+        }
+        function validar_tel($telefono)
+        {
+            if (!preg_match("/^[0-9]{9}$/", $telefono)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        if (validar_tel($telefono) == true && validar_fecha($nacimiento) == true && validar_contra($conta, $repeContra) == true && validar_dni($dni) == true && validar_ape($ape) == true && validar_nombre($name) == true) {
+            $cifrada = hash_hmac('sha512', $_POST["contrase"], "primeraweb");
+            
+            $usuario = 'SELECT dniUsuario,usuPassword FROM usuarios WHERE dniUsuario="' . $_POST["dniUsuario"] . '"';
+            $dato = mysqli_query($enlace, $usuario);
+
+            if (mysqli_num_rows($dato) === 0) {
+
+
+                $consulta = "INSERT INTO usuarios (dniUsuario,usuPassword,usuTipo,usuNombre,usuApell,usuTel,usuDir,fechaNac) 
+                VALUES ('{$_POST["dniUsuario"]}','{$cifrada}','Voluntario','{$_POST["nombre"]}','{$_POST["ape"]}','{$_POST["telefono"]}','{$_POST["direccion"]}','{$_POST["fechaNac"]}')";
+                $introducir = mysqli_query($enlace, $consulta);
+
+                if (!$introducir) {
+                    $introducidos = "Error: No se pudieron insertar los datos";
+                } else {
+                    $introducidos = "Datos introducidos con exito";
+                }
+            } else {
+                $dniError = "El DNI ya existe en la base de datos";
+            }
+        } else {
+            if (validar_fecha($nacimiento) == false) {
+                $nacError = "Fecha incorrecta";
+                $nacimiento = "";
+            }
+
+            if (validar_dni($dni) == false) {
+                $dniError = "El DNI no es válido";
+                $dni = "";
+            }
+            if (validar_ape($ape) == false) {
+                $apeError = "Solo letras y espacios ";
+                $ape = "";
+            }
+            if (validar_nombre($name) == false) {
+                $nombreError = "Solo letras y espacios ";
+                $name = "";
+            }
+            if (validar_tel($telefono) == false) {
+                $telefonoError = "Movil Invalido";
+                $telefono = "";
+            }
+            if (validar_contra($conta, $repeContra) == false) {
+                $contraError = " Las contraseñas no son iguales,vuelve a introducirlas";
+            }
+        }
+    }
     ?>
         <div class="container-fluid ps-md-0">
             <div class="row g-0">
-                <div class="d-none d-md-flex col-md-4 col-lg-6" ></div>
+                <div class="d-none d-md-flex col-md-4 col-lg-6"></div>
                 <div class="col-md-8 col-lg-6">
                     <div class="login d-flex align-items-center py-5">
                         <div class="container">
@@ -268,12 +268,12 @@ functions::get_header();
                                             <label for="floatingInput">Fecha Nacimiento</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="floatingInput" name="telefono"  value="<?php echo $telefono ?>"><span><?php echo $telefonoError; ?></span>
+                                            <input type="text" class="form-control" id="floatingInput" name="telefono" value="<?php echo $telefono ?>"><span><?php echo $telefonoError; ?></span>
                                             <label for="floatingInput">Teléfono</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="floatingInput" name="direccion"  value="<?php echo $direccion ?>">
+                                            <input type="text" class="form-control" id="floatingInput" name="direccion" value="<?php echo $direccion ?>">
                                             <label for="floatingInput">Dirección</label>
                                         </div>
                                         <div class="form-floating mb-3">
@@ -302,69 +302,69 @@ functions::get_header();
             </div>
         </div>
     <?php
-    }
-    if ($_SESSION['action'] === 'agreAct') {
-        $fechaError = $introducidos = $horaError = $hora = "";
-        $fecha = "";
-        if (isset($_POST["agregar"])) {
-            $fecha = $_POST["fecha"];
-            $hora = $_POST["hora"];
-            function validar_fecha($fecha)
-            {
-                $hoy = date("Y-m-d");
-                if ($hoy > $fecha) {
-                    return false;
-                } else {
-
-                    return true;
-                }
-            }
-
-
-            function validar_hora($hora, $fecha)
-            {
-                $hoy = date("Y-m-d");
-                $horaAc = date('H:i:s');;
-
-
-                if ($hoy == $fecha) {
-                    if ($horaAc < $hora) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    return true;
-                }
-            }
-
-            if (validar_fecha($fecha) == true && validar_hora($hora, $fecha) == true) {
-                $comprobarHora = 'SELECT horaActividad,fechaActividad FROM actividades WHERE dniVoluntario="' . $_POST["voluntario"] . '" AND fechaActividad="' . $_POST["fecha"] . '" AND horaActividad="' . $_POST["hora"] . '" ';
-                $dato = mysqli_query($enlace, $comprobarHora);
-
-                if (mysqli_num_rows($dato) === 0) {
-                    $insertAct = "INSERT INTO actividades (id,tipoActividad,dniVoluntario,idAnimal,fechaActividad,horaActividad) 
-                            VALUES (NULL,'{$_POST["actividad"]}','{$_POST["voluntario"]}','{$_POST["animal"]}','{$_POST["fecha"]}','{$_POST["hora"]}')";
-                    $introducir = mysqli_query($enlace, $insertAct);
-                    if (!$introducir) {
-                        $introducidos = "Error: No se pudieron insertar los datos";
-                    } else {
-                        $introducidos = "Datos introducidos con exito";
-                    }
-                } else {
-                    $introducidos = "Error: El voluntario con dni " . $_POST["voluntario"] . " ya tiene una actividad a la " . $_POST["hora"];
-                }
+}
+if ($_SESSION['action'] === 'agreAct') {
+    $fechaError = $introducidos = $horaError = $hora = "";
+    $fecha = "";
+    if (isset($_POST["agregar"])) {
+        $fecha = $_POST["fecha"];
+        $hora = $_POST["hora"];
+        function validar_fecha($fecha)
+        {
+            $hoy = date("Y-m-d");
+            if ($hoy > $fecha) {
+                return false;
             } else {
-                if (validar_fecha($fecha) == false) {
-                    $fechaError = "La fecha no puede ser anterior a hoy";
-                    $fecha = "";
-                }
-                if (validar_hora($hora, $fecha) == false) {
-                    $horaError = "La hora no puede ser anterior a la actual";
-                    $hora = "";
-                }
+
+                return true;
             }
         }
+
+
+        function validar_hora($hora, $fecha)
+        {
+            $hoy = date("Y-m-d");
+            $horaAc = date('H:i:s');;
+
+
+            if ($hoy == $fecha) {
+                if ($horaAc < $hora) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        }
+
+        if (validar_fecha($fecha) == true && validar_hora($hora, $fecha) == true) {
+            $comprobarHora = 'SELECT horaActividad,fechaActividad FROM actividades WHERE dniVoluntario="' . $_POST["voluntario"] . '" AND fechaActividad="' . $_POST["fecha"] . '" AND horaActividad="' . $_POST["hora"] . '" ';
+            $dato = mysqli_query($enlace, $comprobarHora);
+
+            if (mysqli_num_rows($dato) === 0) {
+                $insertAct = "INSERT INTO actividades (id,tipoActividad,dniVoluntario,idAnimal,fechaActividad,horaActividad) 
+                            VALUES (NULL,'{$_POST["actividad"]}','{$_POST["voluntario"]}','{$_POST["animal"]}','{$_POST["fecha"]}','{$_POST["hora"]}')";
+                $introducir = mysqli_query($enlace, $insertAct);
+                if (!$introducir) {
+                    $introducidos = "Error: No se pudieron insertar los datos";
+                } else {
+                    $introducidos = "Datos introducidos con exito";
+                }
+            } else {
+                $introducidos = "Error: El voluntario con dni " . $_POST["voluntario"] . " ya tiene una actividad a la " . $_POST["hora"];
+            }
+        } else {
+            if (validar_fecha($fecha) == false) {
+                $fechaError = "La fecha no puede ser anterior a hoy";
+                $fecha = "";
+            }
+            if (validar_hora($hora, $fecha) == false) {
+                $horaError = "La hora no puede ser anterior a la actual";
+                $hora = "";
+            }
+        }
+    }
     ?>
         <div class="container-fluid ps-md-0">
             <div class="row g-0">
@@ -456,137 +456,140 @@ functions::get_header();
 
 
     <?php
-    }
-    if ($_SESSION['action'] === 'agrAdopcion') {
-        $apeError = $nombreError = $dniError = $introducidos = $nacimiento = $nacError = $telefonoError = $contraError = "";
-        $name = $ape = $dni = $direccion = $telefono = $contra = $mensaje = "";
+}
+if ($_SESSION['action'] === 'agrAdopcion') {
+    $apeError = $nombreError = $dniError = $introducidos = $nacimiento = $nacError = $telefonoError = $contraError = "";
+    $name = $ape = $dni = $direccion = $telefono = $contra = $mensaje = "";
 
-        if (isset($_POST["agregar"])) {
-            $dni = $_POST["dniUsuario"];
-            $nacimiento = $_POST["fechaNac"];
-            $ape = $_POST["ape"];
-            $name = $_POST["nombre"];
-            $direccion = $_POST["direccion"];
-            $telefono = $_POST["telefono"];
-
-
-            function calculaedad($nacimiento)
-            {
-                list($ano, $mes, $dia) = explode("-", $nacimiento);
-                $ano_diferencia  = date("Y") - $ano;
-                $mes_diferencia = date("m") - $mes;
-                $dia_diferencia   = date("d") - $dia;
-                if ($dia_diferencia < 0 || $mes_diferencia < 0)
-                    $ano_diferencia--;
-                return $ano_diferencia;
-            }
-
-            function validar_nombre($name)
-            {
-                if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $name)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            function validar_ape($ape)
-            {
-                if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $ape)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            function validar_dni($dni)
-            {
-                if (!preg_match('/[0-9]{7,8}[A-Z]/', $dni)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
+    if (isset($_POST["agregar"])) {
+        $dni = $_POST["dniUsuario"];
+        $nacimiento = $_POST["fechaNac"];
+        $ape = $_POST["ape"];
+        $name = $_POST["nombre"];
+        $direccion = $_POST["direccion"];
+        $telefono = $_POST["telefono"];
 
 
-            function validar_fecha($nacimiento)
-            {
-                $edad = calculaedad($nacimiento);
-                $hoy = date("Y-m-d");
-                if ($hoy <= $nacimiento || 1900 > $nacimiento || $edad < 18) {
-                    return false;
-                } else {
+        function calculaedad($nacimiento)
+        {
+            list($ano, $mes, $dia) = explode("-", $nacimiento);
+            $ano_diferencia  = date("Y") - $ano;
+            $mes_diferencia = date("m") - $mes;
+            $dia_diferencia   = date("d") - $dia;
+            if ($dia_diferencia < 0 || $mes_diferencia < 0)
+                $ano_diferencia--;
+            return $ano_diferencia;
+        }
 
-                    return true;
-                }
-            }
-            function validar_tel($telefono)
-            {
-                if (!preg_match("/^[0-9]{9}$/", $telefono)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            if (validar_tel($telefono) == true && validar_fecha($nacimiento) == true && validar_dni($dni) == true && validar_ape($ape) == true && validar_nombre($name) == true) {
-                $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $contra = substr(str_shuffle($permitted_chars), 0, 20);
-                $cifrada = hash_hmac('sha512', $contra, "primeraweb");
-                $usuario = 'SELECT dniUsuario,usuPassword FROM usuarios WHERE dniUsuario="' . $_POST["dniUsuario"] . '"';
-                $dato = mysqli_query($enlace, $usuario);
-
-
-                if (mysqli_num_rows($dato) === 0) {
-
-                    $fechaAct = date("Y-m-d");
-                    $consulta = "INSERT INTO usuarios (dniUsuario,usuPassword,usuTipo,usuNombre,usuApell,usuTel,usuDir,fechaNac) 
-              VALUES ('{$_POST["dniUsuario"]}','{$cifrada}','Adoptante','{$_POST["nombre"]}','{$_POST["ape"]}','{$_POST["telefono"]}','{$_POST["direccion"]}','{$_POST["fechaNac"]}')";
-                    $introducir1 = mysqli_query($enlace, $consulta);
-
-                    $insertAnimal = "INSERT INTO adopciones(idAdopcion,dniAdoptante,idAnimal,fechaAdop)
-                    VALUES (NULL,'{$_POST["dniUsuario"]}','{$_POST["animal"]}','{$fechaAct}')";
-                    $introducir2 = mysqli_query($enlace, $insertAnimal);
-
-                    $editar = "UPDATE animales SET aniFechaAdop='$fechaAct',aniAdop='1'  WHERE idAnimal='  $_POST[animal] ' ";
-                    $editAn = mysqli_query($enlace, $editar);
-
-
-                    if (!$introducir1 || !$introducir2 || !$editAn) {
-                        $introducidos = "Error: No se pudieron insertar los datos";
-                    } else {
-                        $introducidos = "Datos introducidos con exito<br>";
-                        $mensaje = "Guarde la contraseña para el primero inicio de sesión.<br>Podrá cambiarla después de iniciar sesión: $contra";
-                    }
-                } else {
-                    $dniError = "El DNI ya existe en la base de datos";
-                }
+        function validar_nombre($name)
+        {
+            if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $name)) {
+                return false;
             } else {
-                if (validar_fecha($nacimiento) == false) {
-                    if (calculaedad($nacimiento) < 18) {
-                        $nacError = "Debe de ser mayor de 18 para poder adoptar";
-                    } else {
-                        $nacError = "Fecha incorrecta";
-                        $nacimiento = "";
-                    }
-                }
-
-                if (validar_dni($dni) == false) {
-                    $dniError = "El DNI no es válido";
-                    $dni = "";
-                }
-                if (validar_ape($ape) == false) {
-                    $apeError = "Solo letras y espacios ";
-                    $ape = "";
-                }
-                if (validar_nombre($name) == false) {
-                    $nombreError = "Solo letras y espacios ";
-                    $name = "";
-                }
-                if (validar_tel($telefono) == false) {
-                    $telefonoError = "Movil Invalido";
-                    $telefono = "";
-                }
+                return true;
             }
         }
+
+        function validar_ape($ape)
+        {
+            if (!preg_match("/^([a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*)+$/", $ape)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validar_dni($dni)
+        {
+          $letra = substr($dni, -1);
+          $numeros = substr($dni, 0, -1);
+          if (substr("TRWAGMYFPDXBNJZSQVHLCKE", $numeros % 23, 1) == $letra && strlen($letra) == 1 && strlen($numeros) == 8) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+
+        function validar_fecha($nacimiento)
+        {
+            $edad = calculaedad($nacimiento);
+            if ($edad <= 18) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validar_tel($telefono)
+        {
+            if (!preg_match("/^[0-9]{9}$/", $telefono)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        if (validar_tel($telefono) == true && validar_fecha($nacimiento) == true && validar_dni($dni) == true && validar_ape($ape) == true && validar_nombre($name) == true) {
+            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $contra = substr(str_shuffle($permitted_chars), 0, 20);
+            $cifrada = hash_hmac('sha512', $contra, "primeraweb");
+            $usuario = 'SELECT dniUsuario,usuPassword FROM usuarios WHERE dniUsuario="' . $_POST["dniUsuario"] . '"';
+            $dato = mysqli_query($enlace, $usuario);
+
+
+            if (mysqli_num_rows($dato) === 0) {
+
+                $fechaAct = date("Y-m-d");
+                $consulta = "INSERT INTO usuarios (dniUsuario,usuPassword,usuTipo,usuNombre,usuApell,usuTel,usuDir,fechaNac) 
+              VALUES ('{$_POST["dniUsuario"]}','{$cifrada}','Adoptante','{$_POST["nombre"]}','{$_POST["ape"]}','{$_POST["telefono"]}','{$_POST["direccion"]}','{$_POST["fechaNac"]}')";
+                $introducir1 = mysqli_query($enlace, $consulta);
+
+                $insertAnimal = "INSERT INTO adopciones(idAdopcion,dniAdoptante,idAnimal,fechaAdop)
+                    VALUES (NULL,'{$_POST["dniUsuario"]}','{$_POST["animal"]}','{$fechaAct}')";
+                $introducir2 = mysqli_query($enlace, $insertAnimal);
+
+                $editar = "UPDATE animales SET aniFechaAdop='$fechaAct',aniAdop='1'  WHERE idAnimal='  $_POST[animal] ' ";
+                $editAn = mysqli_query($enlace, $editar);
+
+
+                if (!$introducir1 || !$introducir2 || !$editAn) {
+                    $introducidos = "Error: No se pudieron insertar los datos";
+                } else {
+                    $introducidos = "Datos introducidos con exito<br>";
+                    $mensaje = "Guarde la contraseña para el primero inicio de sesión.<br>Podrá cambiarla después de iniciar sesión: $contra";
+                }
+            } else {
+                $dniError = "El DNI ya existe en la base de datos";
+            }
+        } else {
+            if (validar_fecha($nacimiento) == false) {
+                if (calculaedad($nacimiento) < 18) {
+                    $nacError = "Debe de ser mayor de 18 para poder adoptar";
+                } else {
+                    $nacError = "Fecha incorrecta";
+                    $nacimiento = "";
+                }
+            }
+
+            if (validar_dni($dni) == false) {
+                $dniError = "El DNI no es válido";
+                $dni = "";
+            }
+            if (validar_ape($ape) == false) {
+                $apeError = "Solo letras y espacios ";
+                $ape = "";
+            }
+            if (validar_nombre($name) == false) {
+                $nombreError = "Solo letras y espacios ";
+                $name = "";
+            }
+            if (validar_tel($telefono) == false) {
+                $telefonoError = "Movil Invalido";
+                $telefono = "";
+            }
+        }
+    }
     ?>
         <div class="container-fluid ps-md-0">
             <div class="row g-0">
@@ -672,7 +675,7 @@ functions::get_header();
         if ($nConfig != 0) {
         ?>
             <div class="container mt-5">
-            <h3 class="login-heading mb-4">Animales actualmente en EL SANTUARIO</h3>
+                <h3 class="login-heading mb-4">Animales actualmente en EL SANTUARIO</h3>
                 <table class="table">
                     <thead class="table-success">
                         <td>Nombre</td>
@@ -714,7 +717,7 @@ functions::get_header();
 
         ?>
             <div class="container mt-5">
-            <h3 class="login-heading mb-4">Todos los animales EL SANTUARIO</h3>
+                <h3 class="login-heading mb-4">Todos los animales EL SANTUARIO</h3>
                 <table class="table">
                     <thead class="table-success">
                         <td>Nombre</td>
@@ -760,6 +763,6 @@ functions::get_header();
     ?>
 
 
-<?php
-functions::get_footer();
-?>
+    <?php
+    functions::get_footer();
+    ?>

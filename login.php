@@ -2,9 +2,10 @@
 <html>
 <?php
 
-  require('functions.php');
-  functions::get_header();
-  ?>
+require('functions.php');
+functions::get_header();
+?>
+
 <head>
 
   <meta charset="utf-8">
@@ -35,11 +36,11 @@
 </head>
 
 <div class="div-contenedor ">
-  <?php 
+  <?php
   $dniError = "";
   if (isset($_POST["entrar"])) {
     $cifrada = hash_hmac('sha512', $_POST["password"], "primeraweb");
-        echo $cifrada;
+    // echo $cifrada;
     $enlace = mysqli_connect("localhost", "comprobar", "comprobar", "elsantuario");
     $usuario = 'SELECT dniUsuario,usuPassword,usuTipo,usuNombre,usuApell,usuTel,usuDir,fechaNac FROM usuarios WHERE dniUsuario="' . $_POST["dni"] . '" AND usuPassword="' . $cifrada . '"';
     $dato = mysqli_query($enlace, $usuario);
@@ -80,13 +81,13 @@
       if (mysqli_num_rows($dato) == 0) {
         $dniError = "El DNI no existe en la base de datos";
       } else {
-        $_SESSION['logueado']=true;
-        header("Location:index.php");
+        $_SESSION['logueado'] = true;
+        header("Location:perfil.php");
       }
     }
   }
   ?>
-  
+
   <div class="container-fluid ps-md-0">
     <div class="row g-0">
       <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -124,6 +125,6 @@
     </div>
   </div>
 
-  <?php 
+  <?php
   functions::get_footer();
   ?>

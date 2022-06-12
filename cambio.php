@@ -2,12 +2,11 @@
 
 require('functions.php');
 functions::get_header();
-?>
 
-
-    <?php
 
     $datos = explode(",", $_SESSION["cambio"]);
+
+    
     $enlace = mysqli_connect("localhost", "voluntario", "voluntario", "elsantuario");
     $fechaError = $introducidos = $horaError = $hora = "";
     $fecha = $datos[6];
